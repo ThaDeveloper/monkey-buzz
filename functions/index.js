@@ -22,6 +22,37 @@ firebase.initializeApp(firebaseConfig);
 
 const db = admin.firestore();
 
+
+// protect routes
+const FBAuth = (req, res, next) =>{
+  let idToken;
+  if(req.headers.authorization && req.headers.authorization.startsWith('Bearer ')){
+    idToken = req.headers.authorization.split('Bearer ')[1];
+  } else {
+    console.error('No token found');
+    return res.status(403).json({error: 'Unauthorized'});
+  }
+
+  admin.auth().verifyIdToken(idToken)
+  .then(decodedToken => {
+    req.user = decodedToken;
+    console.log(decodedToken);
+    return db.collection('users')
+      .where('userId', '==', req.user.uid)
+      .limit(1)
+      .get();
+  })
+  .then(data =>{
+    req.user.handle = data.docs[0].data().handle;
+    return next(); //proceed to execute the protected route
+  })
+  .catch(err =>{
+    console.error('Error while verifying token', err);
+    return res.status(400).json(err);
+  })
+}
+
+//get buzzes
 app.get("/buzzes", (req, res) => {
   db.collection("buzzes")
     .orderBy("createdAt", "desc")
@@ -43,9 +74,10 @@ app.get("/buzzes", (req, res) => {
     .catch(error => console.error(err));
 });
 
-app.post("/buzzes", (req, res) => {
+//post buzz
+app.post("/buzzes", FBAuth, (req, res) => {
   const newBuzz = {
-    userHandle: req.body.userHandle,
+    userHandle: req.user.handle,
     body: req.body.body,
     createdAt: new Date().toISOString()
   };
