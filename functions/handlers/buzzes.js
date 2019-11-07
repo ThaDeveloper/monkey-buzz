@@ -26,6 +26,15 @@ exports.getAllBuzzes = (req, res) => {
 };
 
 exports.postBuzz = (req, res) => {
+  if (req.body.body !== null) {
+    if (req.body.body.trim() === '') {
+      return res.status(400).json({ body: 'Body must not be empty' });
+    }
+  } else{
+    return res.status(400).json({ body: 'Body must not be empty' });
+  }
+  
+
   const newBuzz = {
     userHandle: req.user.handle,
     body: req.body.body,
