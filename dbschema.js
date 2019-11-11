@@ -27,6 +27,16 @@ let db = {
             body: 'Great one ombre!',
             createdAt: '2019-11-04T01:31:30.778Z'
         }
+    ],
+    notifications: [
+        {
+            recipient: 'user',
+            sender: 'john',
+            read:'true | false',
+            buzzId: 'sdeder4r4r4e',
+            type: 'like | comment',
+            createdAt: '2019-11-04T01:31:30.778Z'
+        }
     ]
 };
 
