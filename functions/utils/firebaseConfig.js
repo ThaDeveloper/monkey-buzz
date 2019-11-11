@@ -1,8 +1,8 @@
 
 module.exports = {
-    apiKey: process.env.APIKEY,
+    apiKey: "AIzaSyBnOh5l86rylrtgWstr6RQKZXl0rJZSr7Y",
     authDomain: "monkey-buzz-2019.firebaseapp.com",
-    databaseURL: process.env.DATABASEURL,
+    databaseURL: "https://monkey-buzz-2019.firebaseio.com",
     projectId: "monkey-buzz-2019",
     storageBucket: "monkey-buzz-2019.appspot.com",
     messagingSenderId: "175703200110",
