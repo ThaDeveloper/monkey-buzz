@@ -26,7 +26,7 @@ const {
 //Buzz routes
 app.get("/buzzes", getAllBuzzes);
 app.post("/buzzes", FBAuth, postBuzz);
-app.get("buzzes/:buzzId", getBuzz);
+app.get("/buzzes/:buzzId", getBuzz);
 app.delete("/buzzes/:buzzId", FBAuth, deleteBuzz);
 app.get("/buzzes/:buzzId/like", FBAuth, likeBuzz);
 app.get("/buzzes/:buzzId/unlike", FBAuth, unlikeBuzz);
